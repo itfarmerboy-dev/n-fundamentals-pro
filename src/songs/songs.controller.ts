@@ -1,9 +1,10 @@
-import { Body,Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { Body,Controller, DefaultValuePipe, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { SongsService } from './songs.service.js';
 import { CreateSongDTO } from './dto/create-song-dto.js';
 import { Song } from './song.entity.js';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { UpdateSongDTO } from './dto/update-song-dto.js';
+import { Pagination } from 'nestjs-typeorm-paginate';
 
 @Controller('songs')
 export class SongsController {
@@ -29,8 +30,17 @@ export class SongsController {
     }
     
     @Get()
-    findAll() : Promise<Song[]>{
-        return this.songsService.findAll();
+    findAll(
+        @Query('page',new DefaultValuePipe(1),ParseIntPipe) page : number = 1,
+        @Query('limit',new DefaultValuePipe(10),ParseIntPipe) limit : number = 10
+
+    ) : Promise<Pagination<Song>>{
+        limit = limit > 100 ? 100 : limit;
+        return this.songsService.paginate(
+            {
+                page,limit
+            }
+        );
     }
 
     @Put(":id")

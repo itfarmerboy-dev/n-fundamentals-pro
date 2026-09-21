@@ -5,6 +5,7 @@ import { Song } from './song.entity.js';
 import { CreateSongDTO } from './dto/create-song-dto.js';
 import { UpdateSongDTO } from './dto/update-song-dto.js';
 import { UpdateResult } from 'typeorm';
+import { IPaginationOptions, paginate, Pagination } from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class SongsService {
@@ -13,6 +14,13 @@ export class SongsService {
         @InjectRepository(Song)
         private songsRepo : Repository<Song>
     ){}
+
+    async paginate(options : IPaginationOptions):Promise<Pagination<Song>>{
+        const queryBuilder = this.songsRepo.createQueryBuilder('c');
+        queryBuilder.orderBy('c.releasedDate','DESC');
+
+        return paginate<Song>(queryBuilder,options);
+    }
 
     async create(songDTO : CreateSongDTO):Promise<Song> {
         //create song object
