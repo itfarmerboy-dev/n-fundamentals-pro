@@ -1,6 +1,5 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Playlist } from "../playlist/playlist.entity.js";
-import { ManyToOne } from "typeorm/browser";
 
 @Entity('songs')
 export class Song{
@@ -12,15 +11,15 @@ export class Song{
     title : string;
 
     @Column('varchar',{array : true})
-    artists : string;
+    artists : string[];
 
-    @Column('date')
+    @Column({type : 'date'})
     releasedDate : string;
 
-    @Column('time')
+    @Column({type : 'time'})
     duration : string;
 
-    @Column('text')
+    @Column({type : 'text'})
     lyrics : string;
 
     @ManyToOne(()=>Playlist,(playlist) => playlist.songs )
