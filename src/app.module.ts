@@ -7,12 +7,13 @@ import { SongsModule } from './songs/songs.module.js';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { Song } from './songs/song.entity.js';
-import { UserModule } from './user/users.module.js';
+import { UsersModule } from './user/users.module.js';
 import { User } from './user/user.entity.js';
 import { PlaylistModule } from './playlist/playlists.module.js';
 import { Playlist } from './playlist/playlist.entity.js';
 import { ArtistsModule } from './artists/artists.module.js';
 import { Artist } from './artists/artist.entity.js';
+import { AuthModule } from './auth/auth.module.js';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { Artist } from './artists/artist.entity.js';
         entities : [Song,User,Playlist,Artist],
         synchronize : true,
       })
-    ,SongsModule, UserModule, PlaylistModule, ArtistsModule],
+    ,SongsModule, UsersModule, PlaylistModule, ArtistsModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })
