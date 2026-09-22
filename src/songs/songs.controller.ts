@@ -43,14 +43,14 @@ export class SongsController {
         );
     }
 
-    @Put(":id")
-    updateOne(
-        @Param('id',ParseIntPipe) id : number,
-        @Body() updateSongDTO : UpdateSongDTO
-    ): Promise<UpdateResult>{
-      return this.songsService.update(id,updateSongDTO);  
+    @Put(':id')
+    update(
+        @Param('id', ParseIntPipe) id: number,
+        @Body() updateSongDTO: UpdateSongDTO,
+    ): Promise<Song> {
+        return this.songsService.update(id, updateSongDTO);
     }
-
+    
     @Delete(":id")
     deleteOne(
         @Param(

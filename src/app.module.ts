@@ -11,6 +11,8 @@ import { UserModule } from './user/users.module.js';
 import { User } from './user/user.entity.js';
 import { PlaylistModule } from './playlist/playlists.module.js';
 import { Playlist } from './playlist/playlist.entity.js';
+import { ArtistsModule } from './artists/artists.module.js';
+import { Artist } from './artists/artist.entity.js';
 
 @Module({
   imports: [
@@ -21,10 +23,10 @@ import { Playlist } from './playlist/playlist.entity.js';
         port : 5432,
         username : 'postgres',
         password : 'postgres123',
-        entities : [Song,User,Playlist],
+        entities : [Song,User,Playlist,Artist],
         synchronize : true,
       })
-    ,SongsModule, UserModule, PlaylistModule],
+    ,SongsModule, UserModule, PlaylistModule, ArtistsModule],
   controllers: [AppController],
   providers: [AppService],
 })
