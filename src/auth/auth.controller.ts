@@ -4,10 +4,15 @@ import { User } from '../user/user.entity.js';
 import { Repository } from 'typeorm';
 import { UsersService } from '../user/users.service.js';
 import { CreateUserDTO } from '../user/dto/crate-user.dto.js';
+import { LoginDTO } from './dto/login.dto.js';
+import { AuthService } from './auth.service.js';
 
 @Controller('auth')
 export class AuthController {
-    constructor(private readonly usersService :UsersService){}
+    constructor(
+        private usersService :UsersService,
+        private authService : AuthService
+    ){}
 
     @Post('signup')
     signup(
@@ -17,4 +22,13 @@ export class AuthController {
         return this.usersService.create(userDTO);
     }
 
+    @Post('login')
+    login(
+        @Body() 
+        loginDTO : LoginDTO
+    ){
+        return this.authService.login(loginDTO)
+    }
+
+    
 }

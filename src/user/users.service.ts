@@ -1,13 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDTO } from './dto/crate-user.dto.js';
 import { User } from './user.entity.js';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import *  as bcrypt from 'bcryptjs';
+import { LoginDTO } from '../auth/dto/login.dto.js';
 
 @Injectable()
 export class UsersService {
-
+    
    constructor(
         @InjectRepository(User)
         private userRepo : Repository<User>
@@ -20,4 +21,17 @@ export class UsersService {
         // delete user.password;
         return user;
     }
+
+    async findOne(loginDTO: LoginDTO):Promise<User> {
+        const foundedUser = await this.userRepo.findOneBy(
+            {
+                email : loginDTO.email
+            }
+        )
+        if(!foundedUser)
+            throw new UnauthorizedException('Could not find the User.');
+        return foundedUser;
+    }
+
+
 }

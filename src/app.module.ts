@@ -14,6 +14,8 @@ import { Playlist } from './playlist/playlist.entity.js';
 import { ArtistsModule } from './artists/artists.module.js';
 import { Artist } from './artists/artist.entity.js';
 import { AuthModule } from './auth/auth.module.js';
+import {JwtModule} from '@nestjs/jwt'
+
 
 @Module({
   imports: [
@@ -27,7 +29,8 @@ import { AuthModule } from './auth/auth.module.js';
         entities : [Song,User,Playlist,Artist],
         synchronize : true,
       })
-    ,SongsModule, UsersModule, PlaylistModule, ArtistsModule, AuthModule],
+    ,SongsModule, UsersModule, PlaylistModule, ArtistsModule, AuthModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
