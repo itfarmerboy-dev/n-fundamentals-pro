@@ -12,6 +12,10 @@ export class CreateUserDTO{
     
     @IsString()
     @IsNotEmpty()
+    apiKey : string;
+
+    @IsString()
+    @IsNotEmpty()
     email : string;
         
     @IsString()

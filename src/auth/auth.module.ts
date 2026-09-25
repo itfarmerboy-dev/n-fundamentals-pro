@@ -6,11 +6,14 @@ import { JwtModule } from '@nestjs/jwt';
 import { authConstants } from './auth.constants.js';
 import { JWTStrategy } from './jwt-strategy.js';
 import { PassportModule } from '@nestjs/passport';
+import { ArtistsModule } from '../artists/artists.module.js';
+import { ArtistsService } from '../artists/artists.service.js';
 
 @Module({
   imports: [
     PassportModule,
     UsersModule,
+    ArtistsModule,
     JwtModule.register({
       secret: authConstants.secret,
       signOptions: {
@@ -21,8 +24,8 @@ import { PassportModule } from '@nestjs/passport';
   controllers: [AuthController],
   providers: [
     AuthService,
-    JWTStrategy,
-  ],
+    JWTStrategy
+    ],
   exports: [AuthService],
 })
 export class AuthModule {}

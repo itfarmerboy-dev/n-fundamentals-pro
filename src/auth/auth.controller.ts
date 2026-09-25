@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../user/user.entity.js';
 import { Repository } from 'typeorm';
 import { UsersService } from '../user/users.service.js';
-import { CreateUserDTO } from '../user/dto/crate-user.dto.js';
+import { CreateUserDTO } from '../user/dto/create-user.dto.js';
 import { LoginDTO } from './dto/login.dto.js';
 import { AuthService } from './auth.service.js';
 

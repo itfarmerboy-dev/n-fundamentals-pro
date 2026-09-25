@@ -4,12 +4,15 @@ import { UsersService } from '../user/users.service.js';
 import bcrypt from 'bcryptjs';
 import { User } from '../user/user.entity.js';
 import { JwtService } from '@nestjs/jwt'
+import { ArtistsService } from '../artists/artists.service.js';
+import { PayloadType } from './dto/types.js';
 
 @Injectable()
 export class AuthService {
 
     constructor(private userService : UsersService,
-       private jwtService: JwtService
+       private jwtService: JwtService,
+       private artistService :ArtistsService
     ){}
 
     async login(loginDTO: LoginDTO): Promise<{accessToken : string}> {
@@ -22,10 +25,17 @@ export class AuthService {
         if(!passwordMatshed)
             throw new UnauthorizedException('Password Not matshed.')
 
-        const payload = {
+        const payload : PayloadType = {
             email : foundedUser.email,
-            sub : foundedUser.id
+            userId : foundedUser.id
         }
+
+        const artist = await this.artistService.findArtist(foundedUser.id);
+        
+        if(artist)
+            payload.artistId =  artist.id;
+
+
         return {
             accessToken : this.jwtService.sign(payload)
         };

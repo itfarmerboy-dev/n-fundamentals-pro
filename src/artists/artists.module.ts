@@ -9,6 +9,7 @@ import { ArtistsService } from './artists.service.js';
   imports :[TypeOrmModule.forFeature([Song,Artist])],
   providers: [ArtistsService],
   controllers: [ArtistsController],
+  exports : [ArtistsService]
 })
 
 export class ArtistsModule {}
