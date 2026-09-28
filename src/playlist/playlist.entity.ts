@@ -1,23 +1,30 @@
-import { Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+    Column,
+    Entity,
+    ManyToOne,
+    OneToMany,
+    PrimaryGeneratedColumn
+} from "typeorm";
+
+import type { Relation } from "typeorm";
+
 import { User } from "../user/user.entity.js";
 import { Song } from "../songs/song.entity.js";
 
-
 @Entity('playlists')
-export class Playlist{
-
+export class Playlist {
     @PrimaryGeneratedColumn()
-    id : number;
+    id: number;
 
     @Column()
-    name : string;
+    name: string;
 
     @Column('text')
-    lyrics : string;
+    lyrics: string;
 
-    @ManyToOne(()=> User,(user)=> user.playlists )
-    user : User;
+    @ManyToOne(() => User, (user) => user.playlists)
+    user: Relation<User>;
 
-    @OneToMany( ()=> Song,(song)=> song.playlist )
-    songs : Song[];
+    @OneToMany(() => Song, (song) => song.playlist)
+    songs: Relation<Song[]>;
 }

@@ -15,20 +15,12 @@ import { ArtistsModule } from './artists/artists.module.js';
 import { Artist } from './artists/artist.entity.js';
 import { AuthModule } from './auth/auth.module.js';
 import {JwtModule} from '@nestjs/jwt'
+import { dataSourceOptions } from './db/data-source.js';
 
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-        database : 'spotify-clone',
-        type : 'postgres',
-        host : 'localhost',
-        port : 5432,
-        username : 'postgres',
-        password : 'postgres123',
-        entities : [Song,User,Playlist,Artist],
-        synchronize : true,
-      })
+    TypeOrmModule.forRoot(dataSourceOptions)
     ,SongsModule, UsersModule, PlaylistModule, ArtistsModule, AuthModule
   ],
   controllers: [AppController],

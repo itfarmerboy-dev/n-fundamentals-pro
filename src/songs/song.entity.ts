@@ -1,33 +1,38 @@
-import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+    Column,
+    Entity,
+    JoinTable,
+    ManyToMany,
+    ManyToOne,
+    PrimaryGeneratedColumn
+} from "typeorm";
+
+import type { Relation } from "typeorm";
+
 import { Playlist } from "../playlist/playlist.entity.js";
 import { Artist } from "../artists/artist.entity.js";
 
 @Entity('songs')
-export class Song{
-    
+export class Song {
     @PrimaryGeneratedColumn()
-    id : number;
+    id: number;
 
     @Column()
-    title : string;
+    title: string;
 
-    // @Column('varchar',{array : true})
-    // artists : string[];
+    @Column({ type: 'date' })
+    releasedDate: string;
 
-    @Column({type : 'date'})
-    releasedDate : string;
+    @Column({ type: 'time' })
+    duration: string;
 
-    @Column({type : 'time'})
-    duration : string;
+    @Column({ type: 'text' })
+    lyrics: string;
 
-    @Column({type : 'text'})
-    lyrics : string;
+    @ManyToMany(() => Artist, (artist) => artist.songs, { cascade: true })
+    @JoinTable({ name: 'songs_artists' })
+    artists: Artist[];
 
-    @ManyToMany(()=>Artist,(artist)=> artist.songs,{cascade : true})
-    @JoinTable({name : 'songs_artists'})
-    artists : Artist[]
-    
-    @ManyToOne(()=>Playlist,(playlist) => playlist.songs )
-    playlist : Playlist;
-
+    @ManyToOne(() => Playlist, (playlist) => playlist.songs)
+    playlist: Relation<Playlist>;
 }

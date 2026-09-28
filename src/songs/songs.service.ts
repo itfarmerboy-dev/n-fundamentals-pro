@@ -32,9 +32,7 @@ export class SongsService {
         song.duration = songDTO.duration;
         song.lyrics = songDTO.lyrics;
         song.releasedDate = songDTO.releasedDate;
-        
-        console.log(songDTO.artists);
-        
+                
         //find All artists
         const artists = await this.artistsRepo.findBy({
             id : In(songDTO.artists)
