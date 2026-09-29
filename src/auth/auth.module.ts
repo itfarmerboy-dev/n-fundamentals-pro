@@ -15,7 +15,7 @@ import { ArtistsService } from '../artists/artists.service.js';
     UsersModule,
     ArtistsModule,
     JwtModule.register({
-      secret: authConstants.secret,
+      secret: process.env.SECRET,
       signOptions: {
         expiresIn: '1d',
       },

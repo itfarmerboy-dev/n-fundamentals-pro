@@ -15,13 +15,20 @@ import { ArtistsModule } from './artists/artists.module.js';
 import { Artist } from './artists/artist.entity.js';
 import { AuthModule } from './auth/auth.module.js';
 import {JwtModule} from '@nestjs/jwt'
-import { dataSourceOptions } from './db/data-source.js';
+import { dataSourceOptions, typeOrmAsyncConfig } from './db/data-source.js';
+import { ConfigModule } from '@nestjs/config';
+import configuration from './config/configuration.js';
 
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(dataSourceOptions)
-    ,SongsModule, UsersModule, PlaylistModule, ArtistsModule, AuthModule
+    ConfigModule.forRoot({
+      envFilePath: [`.env.development`,`.env.production`],
+      isGlobal: true,
+      load: [configuration]
+    }),
+    TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
+    SongsModule, UsersModule, PlaylistModule, ArtistsModule, AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

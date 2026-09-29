@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../user/user.entity.js';
 import { Repository } from 'typeorm';
@@ -30,5 +30,9 @@ export class AuthController {
         return this.authService.login(loginDTO)
     }
 
-    
+    @Get('env')
+    getEnvVariables(){
+        return this.authService.getEnvVariables();
+    }
+
 }
